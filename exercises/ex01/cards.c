@@ -9,7 +9,12 @@ Ilya Besancon, Spring 2019
 #include <stdio.h>
 #include <stdlib.h>
 
-int card_val(char * card_name){
+/*
+card_val uses to pointer to where the value to card_name is stored
+returns an integer value, val
+*/
+int card_val(char *card_name){
+  int val = 0;
   switch(card_name[0]) {
     case 'K':
     case 'Q':
@@ -19,18 +24,18 @@ int card_val(char * card_name){
     case 'A':
       val = 11;
       break;
-    case 'X':
-      continue;
     default:
       val = atoi(card_name);
       if ((val <1)||(val > 10)) {
         puts("I don't understand that value!");
-        continue;
       }
   }
   return val;
 }
 
+/*
+update_count updates the count, it takes in val and the pointer to count
+*/
 void update_count(int val, int *count){
   if ((val >2) && (val <7)) {
     count++;
@@ -39,7 +44,10 @@ void update_count(int val, int *count){
   }
 }
 
-
+/*
+this is the main loop of the function, which loops through until the user
+enters 'X' into the prompt
+*/
 int main()
 {
   char card_name[3];
