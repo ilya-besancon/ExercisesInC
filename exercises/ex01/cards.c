@@ -38,9 +38,9 @@ update_count updates the count, it takes in val and the pointer to count
 */
 void update_count(int val, int *count){
   if ((val >2) && (val <7)) {
-    count++;
+    (*count)++;
   } else if (val == 10) {
-    count--;
+    (*count)--;
   }
 }
 
