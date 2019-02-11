@@ -10,19 +10,50 @@ After reads EOF, should return the sum of the integers.
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h> //included to allow for atoi and strlen functions
 
-void main() {
-  char input_array[6];
+#define BUFFER_SIZE 15
+
+/*
+Takes in the integer input and int pointer to status.
+Updates status based on valid/invalid input
+*/
+void check_input(int number, int* status){
+  if (number > 0){
+    *status = 1;
+  }
+  else {
+    *status = 0;
+  }
+}
+
+int main() {
+  char input_array[10];
   int sum = 0;
+  int number;
+  int status;
 
-  while(0 < 1) {
-    puts("Enter an integer: ");
-    scanf("%3s", input_array); //reads in 3 digits at a time
-    if (input_array[0] == 'X'){
+  while(scanf("%s", input_array) != EOF){ //checks for EOF to break loop
+    int length = strlen(input_array);
+    printf("Length is %i\n", length);
+
+    if (length < BUFFER_SIZE){
+      number = atoi(input_array); //returns 0 if string
+      check_input(number, &status); //updates status
+      if(status == 1){ //everything is a ok
+        printf("Adding %i\n", number);
+        sum += number; //updates sum
+      }
+      else { //input must be invalid
+        printf("Invalid input!\n");
+        break;
+      }
+    }
+    else { // length must exceed buffer, too long
+      printf("Input is too long!\n");
       break;
     }
-    int num = atoi(input_array);
-    sum += num;
   }
-  printf("Total is: %d\n", sum);
+  printf("Total is: %d\n", sum); //prints total
+  return 0;
 }
