@@ -35,13 +35,13 @@ int main() {
 
   while(scanf("%s", input_array) != EOF){ //checks for EOF to break loop
     int length = strlen(input_array);
-    printf("Length is %i\n", length);
+    //printf("Length is %i\n", length);
 
     if (length < BUFFER_SIZE){
       number = atoi(input_array); //returns 0 if string
       check_input(number, &status); //updates status
       if(status == 1){ //everything is a ok
-        printf("Adding %i\n", number);
+        //printf("Adding %i\n", number);
         sum += number; //updates sum
       }
       else { //input must be invalid
