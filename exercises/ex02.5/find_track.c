@@ -1,7 +1,9 @@
-/* Example code for Exercises in C.
+/*
+Ilya Besancon
+Software Systems Exercise 2.5
 
-Modified version of an example from Chapter 2.5 of Head First C.
-
+This program uses regular expression matching to check for matches
+between user input and a preset track list
 */
 
 #include <stdio.h>
@@ -46,17 +48,14 @@ void find_track_regex(char pattern[]) {
     }
 
     int j;
+    //iterating through track list to check status
     for (j=0; j<NUM_TRACKS; j++) {
         status = regexec(&re, tracks[j], (size_t) 0, NULL, 0);
         if (status == 0) {
             printf("Track %i: '%s'\n", j, tracks[j]);
         }
     }
-    regfree(&re);
-    //if (status != 0) {
-      //  printf("No matches found");
-        //return(0);      /* report error */
-    //}
+    regfree(&re); //using regcomp
 }
 
 // Truncates the string at the first newline, if there is one.
