@@ -33,8 +33,19 @@ s: string
 returns: string
 */
 char *reverse_string(char *s) {
-    //TODO: Fill this in.
-    return "";
+    printf("string input: %s\n", s);
+    //printf("string address: %p\n", &s);
+    int len = strlen(s);
+    char *newstring = (char *) malloc(len);
+    //printf("String lenth is %i\n", len);
+
+    int i;
+    for (i=0;i<len;i++){
+      //printf("character is %i\n", s[len-i]);
+      newstring[i] = s[(len-i) - 1];
+    }
+    printf("Your new string is %s\n", newstring);
+    return newstring;
 }
 
 /* ctoi: Converts a character to integer.
@@ -184,12 +195,12 @@ void test_add_bigint() {
     char *t = "99999999999999999999999999999999999999999999";
     char *res = "000000000000000000000000000000000000000000001";
 
-    BigInt big1 = make_bigint(s);    
+    BigInt big1 = make_bigint(s);
     BigInt big2 = make_bigint(t);
     BigInt big3 = malloc(100);
 
 	add_bigint(big1, big2, '0', big3);
-    
+
     if (strcmp(big3, res) == 0) {
         printf("add_bigint passed\n");
     } else {
