@@ -33,7 +33,7 @@ s: string
 returns: string
 */
 char *reverse_string(char *s) {
-    printf("string input: %s\n", s);
+    //printf("string input: %s\n", s);
     //printf("string address: %p\n", &s);
     int len = strlen(s);
     char *newstring = (char *) malloc(len);
@@ -44,7 +44,7 @@ char *reverse_string(char *s) {
       //printf("character is %i\n", s[len-i]);
       newstring[i] = s[(len-i) - 1];
     }
-    printf("Your new string is %s\n", newstring);
+    //printf("Your new string is %s\n", newstring);
     return newstring;
 }
 
@@ -64,14 +64,19 @@ i: integer 0 to 9
 returns: character '0' to '9'
 */
 char itoc(int i) {
-    //TODO: Fill this in, with an appropriate assertion.
-    return '0';
+    if ( isdigit(i)) {
+      printf("Something has happened");
+    }
+    else {
+      return i + '0';
+    }
+    return 0;
 }
 
 /* add_digits: Adds two decimal digits, returns the total and carry.
 
-For example, if a='5', b='6', and carry='1', the sum is 12, so
-the output value of total should be '2' and carry should be '1'
+For example, if a='5', b='6', and carry='1', the sum is 11, so
+the output value of total should be '1' and carry should be '1'
 
 a: character '0' to '9'
 b: character '0' to '9'
@@ -81,7 +86,17 @@ carry: pointer to char
 
 */
 void add_digits(char a, char b, char c, char *total, char *carry) {
-    //TODO: Fill this in.
+    //printf("Inputs: %c, %c, %c\n", a, b, c);
+    int d = ctoi(a);
+    int e = ctoi(b);
+    int f = ctoi(c);
+    int sum = (d + e + f);
+    //printf("Total: %i\n", sum);
+
+    char buffer[10];
+    sprintf(buffer, "%d", sum);
+    *total = buffer[1];
+    *carry = buffer[0];
 }
 
 /* Define a type to represent a BigInt.
@@ -129,7 +144,7 @@ void add_bigint(BigInt x, BigInt y, char carry_in, BigInt z) {
     // if total and carry are 0, we're done
     if (total == '0' && carry_out == '0') {
         *z = '\0';
-        return;
+        //return;
     }
     // otherwise store the digit we just computed
     *z = total;
@@ -164,11 +179,13 @@ BigInt make_bigint(char *s) {
 void test_reverse_string() {
     char *s = "123";
     char *t = reverse_string(s);
+
     if (strcmp(t, "321") == 0) {
         printf("reverse_string passed\n");
     } else {
         printf("reverse_string failed\n");
     }
+    free(t);
 }
 
 void test_itoc() {
@@ -216,6 +233,6 @@ int main (int argc, char *argv[])
 
     //TODO: When you have the first three functions working,
     //      uncomment the following, and it should work.
-    // test_add_bigint();
+    test_add_bigint();
     return 0;
 }
