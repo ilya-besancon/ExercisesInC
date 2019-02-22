@@ -26,16 +26,6 @@ Ex03 Questions post exercise:
 #include <stdlib.h>
 #include <string.h>
 
-void write_to_file(char* d, char* NAME){
-    char c[1000];
-
-    char *line = NULL;
-    size_t len = 0;
-    ssize_t read;
-
-}
-
-
 /*
  * The integer, argc is the argument count. It is the number of arguments passed
  * into the program from the command line, including the name of the program.
