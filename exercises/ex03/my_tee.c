@@ -1,10 +1,25 @@
 /*
 Ilya Besancon
 Software Systems Spring 2019
+version 1.0
+
+NOTE: currently takes in 0-1 flags and only 1 file
 
 This program is an implementation of tee:
 Reads standard input and writes it to both standard output
 and one or more files, effectively duplicating its input
+
+Ex03 Questions post exercise:
+3. Reflect upon what worked and what I would do differently
+
+  Divide and conquer.
+  Read enough google to understand the function itself and
+  examples of how to read/write files, take in stdin, etc.
+
+4. Compare solution to example implementation
+
+  The professional code is definitely different from my solution.
+
 */
 
 #include <stdio.h>
