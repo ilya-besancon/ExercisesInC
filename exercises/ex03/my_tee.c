@@ -2,7 +2,7 @@
 Ilya Besancon
 Software Systems Spring 2019
 
-This program is my version of the tee function:
+This program is an implementation of tee:
 Reads standard input and writes it to both standard output
 and one or more files, effectively duplicating its input
 */
@@ -10,8 +10,6 @@ and one or more files, effectively duplicating its input
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define FILE_NAME "file_b.txt"
 
 void write_to_file(char* d, char* NAME){
     char c[1000];
@@ -35,16 +33,6 @@ void write_to_file(char* d, char* NAME){
  */
 int main (int argc, char *argv[] )
 {
-    /*
-    this is where we process the flags
-    printf("argument count: %d\n\n", argc);
-    puts("arguments:");
-    int i;
-    for (i=0; i<argc; i++) {
-        printf("\t%s , i = %i\n", argv[i], i);
-    }
-    */
-
     //checking for flags
     int flagstatus = 0; //0 is no flag, 1 is append flag
     const char* append_flag = "-a";
@@ -53,7 +41,7 @@ int main (int argc, char *argv[] )
     if(oper == 0){
       flagstatus = 1;
     }
-    printf("flagstatus is: %i\n", flagstatus);
+    //printf("flagstatus is: %i\n", flagstatus);
 
     char *line = NULL;
     size_t len = 0;
@@ -68,6 +56,7 @@ int main (int argc, char *argv[] )
     }
 
     while ((read = getline(&line, &len, stdin)) != -1) {
+        printf("%s", line);
         fputs(line, output);
     }
 
