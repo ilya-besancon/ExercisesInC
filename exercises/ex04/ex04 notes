@@ -1,0 +1,22 @@
+Exercise 04 Notes for SS
+
+Trace rout -> trout by Allen Downey
+  unit tests coming soon
+
+
+main.c
+  max #ttl (time to live)
+  something
+
+
+trout.h
+  extern max.#1
+  extern  saddr
+  extern int  x = 5;
+
+trout.c
+  saddr
+
+utils.h
+
+utils.c
