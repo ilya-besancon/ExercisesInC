@@ -10,6 +10,8 @@ License: Creative Commons Attribution-ShareAlike 3.0
 #include <stdio.h>
 #include <stdlib.h>
 
+//defining a struct as containing a value,
+//and a pointer to the next node
 typedef struct node {
     int val;
     struct node *next;
@@ -54,8 +56,15 @@ void print_list(Node **list) {
 * returns: int or -1 if the list is empty
 */
 int pop(Node **list) {
-    // FILL THIS IN!
-    return 0;
+    Node *head = *list; //creater another reference to head
+    //Node *head = NULL;
+    if (head == NULL) return -1;
+    int thing = (*list)->val;
+    *list = (*list)->next; //whatever list is pointing to, make it point to the next node in the list
+    free(head); //free the first node, but not the rest!
+    //printf("Your value: %i\n", thing);
+
+    return thing;
 }
 
 
@@ -65,7 +74,11 @@ int pop(Node **list) {
 * val: value to add
 */
 void push(Node **list, int val) {
-    // FILL THIS IN!
+     Node *head = *list; //creater another reference to head
+     Node *newhead = make_node(val, head); //makes a node
+     //int thing = (*list)->val;
+     *list = newhead; //*list is a pointer to a Node, newhead is a pointer to a Node
+     //free(head); //free the first node, but not the rest!
 }
 
 
@@ -79,8 +92,23 @@ void push(Node **list, int val) {
 * returns: number of nodes removed
 */
 int remove_by_value(Node **list, int val) {
+    Node *head = *list;
+    int previous;
+    while (1) {
+      int thing = head->val;
+      //printf("value is %i\n",thing);
+      if (thing == val){
+        Node **newlist = &head;
+        pop(newlist);
+        push(newlist, 1);
+        //head->val = 4;
+        break;
+      }
+      head = head->next;
+    }
+    ///free(head);
     // FILL THIS IN!
-    return 0;
+    return 1;
 }
 
 
@@ -96,26 +124,33 @@ void reverse(Node **list) {
 
 
 int main() {
-    Node *head = make_node(1, NULL);
-    head->next = make_node(2, NULL);
+    Node *head = make_node(1, NULL); //makes a node
+    head->next = make_node(2, NULL); //head is the original node, next is pointer to the following nodes
     head->next->next = make_node(3, NULL);
     head->next->next->next = make_node(4, NULL);
+    //head->next->next->next->next = make_node(5, NULL); //example if wanted to extend
+
+    //list is a pointer to the head, which is a pointer to a node
 
     Node **list = &head;
     print_list(list);
 
     int retval = pop(list);
+    printf("Removing %i\n", retval);
     print_list(list);
 
     push(list, retval+10);
+    printf("Pushing 11 to front \n");
     print_list(list);
 
     remove_by_value(list, 3);
     print_list(list);
 
-    remove_by_value(list, 7);
+    //remove_by_value(list, 7);
     print_list(list);
 
     reverse(list);
     print_list(list);
+
+    return 0;
 }
