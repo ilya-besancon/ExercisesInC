@@ -30,8 +30,10 @@ def main(script, filename=None):
     counter = Counter(t)
 
     xs = counter.keys()
-    xs.sort()
+    # xs.sort()
+    xs = sorted(xs)
 
+    # ys = np.cumsum(counter.values(), dtype=float)  # .astype(float)
     ys = np.cumsum(counter.values()).astype(float)
     ys /= ys[-1]
 
@@ -43,4 +45,5 @@ def main(script, filename=None):
 
 
 if __name__ == '__main__':
-    main(*sys.argv)
+    # main(*sys.argv)
+    main("hello", "data")
