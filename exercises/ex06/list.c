@@ -61,6 +61,7 @@ int pop(Node **list) {
     if (head == NULL) return -1;
     int thing = (*list)->val;
     *list = (*list)->next; //whatever list is pointing to, make it point to the next node in the list
+    printf("Freeing!\n");
     free(head); //free the first node, but not the rest!
     //printf("Your value: %i\n", thing);
 
@@ -76,9 +77,7 @@ int pop(Node **list) {
 void push(Node **list, int val) {
      Node *head = *list; //creater another reference to head
      Node *newhead = make_node(val, head); //makes a node
-     //int thing = (*list)->val;
      *list = newhead; //*list is a pointer to a Node, newhead is a pointer to a Node
-     //free(head); //free the first node, but not the rest!
 }
 
 
@@ -92,23 +91,21 @@ void push(Node **list, int val) {
 * returns: number of nodes removed
 */
 int remove_by_value(Node **list, int val) {
-    Node *head = *list;
-    int previous;
-    while (1) {
-      int thing = head->val;
-      //printf("value is %i\n",thing);
-      if (thing == val){
-        Node **newlist = &head;
-        pop(newlist);
-        push(newlist, 1);
-        //head->val = 4;
-        break;
-      }
-      head = head->next;
+    Node *newhead = *list;
+    Node *secondhead = *list;
+    int counter = 0;
+
+    while (newhead != NULL) {
+        if(newhead->val == val){ //if there's a match
+          secondhead->next = newhead->next;
+          counter++;
+          free(newhead);
+          break;
+        }
+        secondhead = newhead; //creating a copy
+        newhead = newhead->next; //updating the next head
     }
-    ///free(head);
-    // FILL THIS IN!
-    return 1;
+    return counter;
 }
 
 
@@ -119,8 +116,21 @@ int remove_by_value(Node **list, int val) {
 * list: pointer to pointer to Node
 */
 void reverse(Node **list) {
-    // FILL THIS IN!
+    //printf("Running the reverse function \n");
+    Node *newlist = *list;
+    Node *next_node = newlist->next;
+    Node *previous = newlist;
+    previous->next = NULL;
+
+    while(next_node != NULL){
+      newlist = next_node;
+      next_node = newlist->next;
+      newlist->next = previous;
+      previous = newlist;
+    }
+    *list = newlist;
 }
+
 
 
 int main() {
@@ -146,11 +156,12 @@ int main() {
     remove_by_value(list, 3);
     print_list(list);
 
-    //remove_by_value(list, 7);
+    remove_by_value(list, 7);
     print_list(list);
 
     reverse(list);
     print_list(list);
 
+    free(head);
     return 0;
 }
