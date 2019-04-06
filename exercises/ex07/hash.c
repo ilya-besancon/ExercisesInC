@@ -178,11 +178,19 @@ int hash_hashable(Hashable *hashable)
 */
 int equal_int (void *ip, void *jp)
 {
-    // FILL THIS IN!
-    return 0;
+    //printf("Running function equal_int\n");
+    int a = *(int*)ip; //casting to int pointer and dereferencing to int
+    int b = *(int*)jp;
+    //printf("ip val: %i, jp val: %i\n", a, b);
+    if(a == b){
+      return 1;
+    }
+    else {
+      return 0;
+    }
 }
 
-
+// FILL THIS IN!// FILL THIS IN!
 /* Compares strings.
 *
 * s1: pointer to first char of a string
@@ -192,8 +200,14 @@ int equal_int (void *ip, void *jp)
 */
 int equal_string (void *s1, void *s2)
 {
-    // FILL THIS IN!
-    return 0;
+    char *a = (char *)s1;
+    char *b = (char *)s2;
+    if(strcmp(a, b) == 0){
+      return 1;
+    }
+    else{
+      return 0;
+    }
 }
 
 
@@ -205,10 +219,23 @@ int equal_string (void *s1, void *s2)
 * returns: 1 if equal, 0 otherwise
 *
 */
+
 int equal_hashable(Hashable *h1, Hashable *h2)
 {
-    // FILL THIS IN!
-    return 0;
+    int a = hash_hashable(h1);
+    int b = hash_hashable(h2);
+
+    if(a==b){
+      return 1;
+    }
+
+    else{
+      return 0;
+    }
+
+    //if hashes to the same value, then they are equal
+    //hashing is taking an object and creating a primitive representation of it
+    //using a string or integer
 }
 
 
