@@ -323,7 +323,17 @@ Node *prepend(Hashable *key, Value *value, Node *rest)
 /* Looks up a key and returns the corresponding value, or NULL */
 Value *list_lookup(Node *list, Hashable *key)
 {
-    // FILL THIS IN!
+    Node *current_node = list; //creates current node
+    Node *next_node = current_node->next; //creates next node
+
+    while(next_node!= NULL){
+      if((current_node->key) = key){
+        return (current_node->value); //returns the value
+      }
+      else{
+        current_node = current_node->next; //switches to next node
+      }
+    }
     return NULL;
 }
 
@@ -369,14 +379,27 @@ void print_map(Map *map)
 void map_add(Map *map, Hashable *key, Value *value)
 {
     // FILL THIS IN!
+    Node *newnode;
+    int index = (hash_hashable(key) % map->n); //hash the key, mod it by number of lists, put it in that lists
+    if(map->lists[index] != NULL){
+          newnode = prepend(key, value, map->lists[index]);
+    }
+    else{
+      newnode = prepend(key, value, NULL);
+    }
+    map->lists[index] = newnode;
 }
 
 
 /* Looks up a key and returns the corresponding value, or NULL. */
 Value *map_lookup(Map *map, Hashable *key)
 {
-    // FILL THIS IN!
-    return NULL;
+    /*
+    int index = (hash_hashable(hashable) % map->n);
+    Node *list = map->lists[index];
+    return list_lookup(list, hashable->key);
+    */
+    return list_lookup(map->lists[hash_hashable(key) % map->n], key);
 }
 
 
@@ -405,6 +428,7 @@ int main ()
     print_list (list);
 
     // run some test lookups
+    printf("RUNNING LIST LOOKUP\n");
     Value *value = list_lookup (list, hashable1);
     print_lookup(value);
 
@@ -416,13 +440,14 @@ int main ()
 
     // make a map
     Map *map = make_map(10);
-    map_add(map, hashable1, value1);
+    map_add(map, hashable1, value1); //map add takes in (map, hashable key, value)
     map_add(map, hashable2, value2);
 
     printf ("Map\n");
     print_map(map);
 
     // run some test lookups
+    printf("RUNNING MAP LOOKUP\n");
     value = map_lookup(map, hashable1);
     print_lookup(value);
 
