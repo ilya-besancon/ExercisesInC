@@ -36,6 +36,9 @@ void child_code(int i)
     printf("Hello from child %d.\n", i);
     printf("Address of global is: %p\n", &global_int);
     //the address for each child is the same, so the global vars must also be shared
+    int j;
+    printf("Local variable address is: %p\n", &j);
+    //have the same virtual address, but must have different addresses in physical memory bcs using different page tables.
 }
 
 // main takes two parameters: argc is the number of command-line
@@ -101,5 +104,6 @@ int main(int argc, char *argv[])
     stop = get_seconds();
     printf("Elapsed time = %f seconds.\n", stop - start);
 
+    free(str);
     exit(0);
 }
