@@ -18,7 +18,7 @@ License: MIT License https://opensource.org/licenses/MIT
 // errno is an external global variable that contains
 // error information
 extern int errno;
-
+int global_int = 3;
 
 // get_seconds returns the number of seconds since the
 // beginning of the day, with microsecond precision
@@ -34,6 +34,8 @@ void child_code(int i)
 {
     sleep(i);
     printf("Hello from child %d.\n", i);
+    printf("Address of global is: %p\n", &global_int);
+    //the address for each child is the same, so the global vars must also be shared
 }
 
 // main takes two parameters: argc is the number of command-line
@@ -53,7 +55,7 @@ int main(int argc, char *argv[])
     } else {
         num_children = 1;
     }
-
+    char * str = malloc(15);
     // get the start time
     start = get_seconds();
 
@@ -73,6 +75,8 @@ int main(int argc, char *argv[])
         /* see if we're the parent or the child */
         if (pid == 0) {
             child_code(i);
+            printf("Address of dynamically allocated array: %p\n", &str);
+            //both children share the same addresses!
             exit(i);
         }
     }
