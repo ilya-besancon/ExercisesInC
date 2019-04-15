@@ -27,6 +27,7 @@ void *check_malloc(int size)
     return p;
 }
 
+//include mutex
 typedef struct {
     int counter;
     int end;
@@ -38,6 +39,7 @@ Shared *make_shared(int end)
 {
     int i;
     Shared *shared = check_malloc(sizeof(Shared));
+    shared->mutex = make_mutex(); //create mutex
 
     shared->counter = 0;
     shared->end = end;
@@ -46,8 +48,6 @@ Shared *make_shared(int end)
     for (i=0; i<shared->end; i++) {
         shared->array[i] = 0;
     }
-
-    shared->mutex = make_mutex();
     return shared;
 }
 
@@ -71,23 +71,24 @@ void join_thread(pthread_t thread)
     }
 }
 
+//update w/ mutexs
 void child_code(Shared *shared)
 {
-    printf("Starting child at counter %d\n", shared->counter);
+    //printf("Starting child at counter %d\n", shared->counter);
 
     while (1) {
-        mutex_lock(shared->mutex);
         if (shared->counter >= shared->end) {
-            mutex_unlock(shared->mutex);
             return;
         }
-
-        shared->array[shared->counter]++;
+        //lock here?
+        mutex_lock(shared->mutex);
+        shared->array[shared->counter]++; //increments array value. work
         shared->counter++;
 
         if (shared->counter % 10000 == 0) {
-            printf("%d\n", shared->counter);
+            //printf("%d\n", shared->counter);
         }
+        //unlock here?
         mutex_unlock(shared->mutex);
     }
 }
@@ -96,7 +97,7 @@ void *entry(void *arg)
 {
     Shared *shared = (Shared *) arg;
     child_code(shared);
-    printf("Child done.\n");
+    //printf("Child done.\n");
     pthread_exit(NULL);
 }
 
@@ -104,12 +105,12 @@ void check_array(Shared *shared)
 {
     int i, errors=0;
 
-    printf("Checking...\n");
+    //printf("Checking...\n");
 
     for (i=0; i<shared->end; i++) {
         if (shared->array[i] != 1) errors++;
     }
-    printf("%d errors.\n", errors);
+    //printf("%d errors.\n", errors);
 }
 
 int main()
