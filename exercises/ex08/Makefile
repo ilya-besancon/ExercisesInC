@@ -3,3 +3,6 @@ comp: ex_compile.c
 
 wordcount: word_count.c
 	gcc word_count.c -Wall -o wordcount `pkg-config --cflags --libs glib-2.0`
+
+words: words.c
+	gcc words.c -Wall -o words
